@@ -30,6 +30,7 @@ public class Gravity_Player : MonoBehaviour
             {
                GetComponent<SpriteRenderer>().enabled = false;
                Explosion_Anim.SetBool("IsExploding", true);
+
             }
        */
     }
