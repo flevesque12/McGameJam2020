@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Variables
     [Range(0,20)]
     public float m_Speed;
 
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 m_MovementVector;
 
     private bool m_CanMove = true;
+    #endregion
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,17 +36,22 @@ public class PlayerMovement : MonoBehaviour
         {
             m_Rb.AddForce(Vector2.zero);
         }
+
+
+        HandleInput();
     }
 
    
 
-    public void PlayerRotation()
+    public void PlayerRotation(float angle)
     {
 
     }
 
     public void HandleInput()
     {
-        m_MovementVector.x = Input.GetAxisRaw("Horizontal") * m_Speed;
+        float _moveVertical = Input.GetAxisRaw("Horizontal") * m_Speed;
+        Vector3 _movementAxis = new Vector3(0.0f, 0.0f, _moveVertical);
+        transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(0.0f, 0.0f, _movementAxis.z), 20 * Time.deltaTime);
     }
 }
