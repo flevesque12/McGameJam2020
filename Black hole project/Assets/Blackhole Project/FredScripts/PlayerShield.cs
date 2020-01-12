@@ -47,4 +47,6 @@ public class PlayerShield : MonoBehaviour
         m_CurrentShieldPoint = 0;
         UpdateShieldUI();
     }
+
+   
 }
