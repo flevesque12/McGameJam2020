@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gravity_Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Gravity_Player : MonoBehaviour
     Animator Anim;
     Animator Explosion_Anim;
     public GameObject GameOver;
+    public AudioClip ExplosionSound;
     #endregion
 
     void Start()
@@ -34,7 +36,9 @@ public class Gravity_Player : MonoBehaviour
             GameObject.FindGameObjectWithTag("Explosion").GetComponent<SpriteRenderer>().enabled = true;
             Explosion_Anim.SetBool("IsExploding", true);
             GameOver.SetActive(true);
-        } 
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().enabled = true;
+            StartCoroutine(GameOver_Explosion());
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -59,6 +63,9 @@ public class Gravity_Player : MonoBehaviour
             GameObject.FindGameObjectWithTag("Fireblast").GetComponent<SpriteRenderer>().enabled = false;
             GameObject.FindGameObjectWithTag("Shield").GetComponent<SpriteRenderer>().enabled = false;
             GameOver.SetActive(true);
+            StartCoroutine(GameOver_Blackhole());
+            // Coroutine2
+
         }
 
         // Collision with Planet
@@ -73,4 +80,17 @@ public class Gravity_Player : MonoBehaviour
             GetComponent<PlayerShield>().TakeDamage(25f);
         }
     }
+
+    IEnumerator GameOver_Explosion()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("MainMenuScene");
+    }
+
+    IEnumerator GameOver_Blackhole()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("MainMenuScene");
+    }
+
 }
