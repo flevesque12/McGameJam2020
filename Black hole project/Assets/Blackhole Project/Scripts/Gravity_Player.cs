@@ -11,7 +11,7 @@ public class Gravity_Player : MonoBehaviour
     Animator Anim;
     Animator Explosion_Anim;
     public GameObject GameOver;
-    public AudioClip ExplosionSound;
+    public GameObject Victory;
     #endregion
 
     void Start()
@@ -63,7 +63,7 @@ public class Gravity_Player : MonoBehaviour
             GameObject.FindGameObjectWithTag("Fireblast").GetComponent<SpriteRenderer>().enabled = false;
             GameObject.FindGameObjectWithTag("Shield").GetComponent<SpriteRenderer>().enabled = false;
             GameOver.SetActive(true);
-            StartCoroutine(GameOver_Blackhole());
+            StartCoroutine(ReturnToMenu());
             // Coroutine2
 
         }
@@ -71,26 +71,33 @@ public class Gravity_Player : MonoBehaviour
         // Collision with Planet
         if (col.gameObject.tag == "Planet")
         {
-            GetComponent<PlayerShield>().TakeDamage(50f);
+            GetComponent<PlayerShield>().TakeDamage(25f);
         }
 
         // Collision with Meteor
         if (col.gameObject.tag == "Meteor")
         {
-            GetComponent<PlayerShield>().TakeDamage(25f);
+            GetComponent<PlayerShield>().TakeDamage(15f);
+        }
+
+        // Victory! - Collision with Mothership
+        if (col.gameObject.tag == "Mothership")
+        {
+            GameObject.FindGameObjectWithTag("Mothership").GetComponent<AudioSource>().enabled = true;
+            Victory.SetActive(true);
+            StartCoroutine(ReturnToMenu());
         }
     }
 
     IEnumerator GameOver_Explosion()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("MainMenuScene");
     }
 
-    IEnumerator GameOver_Blackhole()
+    IEnumerator ReturnToMenu()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("MainMenuScene");
     }
-
 }

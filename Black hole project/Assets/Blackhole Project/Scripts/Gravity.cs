@@ -31,6 +31,7 @@ public class Gravity : MonoBehaviour
             Debug.Log("Gravity_attraction");
             Anim.SetBool("IsReducing", true);
         }
+        if (col.gameObject.tag == "Gravity_attraction2")
         {
             speed = speed + 1;
         }

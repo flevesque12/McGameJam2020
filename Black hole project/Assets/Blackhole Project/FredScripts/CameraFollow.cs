@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
 
-    private Transform m_Player;
+    public Transform m_Player;
     Vector3 m_Newpos;
 
     // Start is called before the first frame update
