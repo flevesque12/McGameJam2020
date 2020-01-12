@@ -10,7 +10,7 @@ public class PlayerShield : MonoBehaviour
     [SerializeField]
     private float m_MaxShield = 100f;
 
-    private float m_CurrentShieldPoint = 0f;
+    public float m_CurrentShieldPoint = 0f;
 
     public Image m_ShieldImgUI = null;
 

@@ -9,7 +9,7 @@ public class Gravity_Player : MonoBehaviour
     private Transform target;
     Animator Anim;
     Animator Explosion_Anim;
-    //ShieldHP
+    public GameObject GameOver;
     #endregion
 
     void Start()
@@ -19,56 +19,58 @@ public class Gravity_Player : MonoBehaviour
         Explosion_Anim = GameObject.FindGameObjectWithTag("Explosion").GetComponent<Animator>();
     }
 
-   
     void Update()
     {
         // Objects Move toward Blackhole
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
         // Explosion Game OVER
-        /*if(ShieldHP == 0)
+        if(GetComponent<PlayerShield>().m_CurrentShieldPoint == 0)
             {
-               GetComponent<SpriteRenderer>().enabled = false;
-               Explosion_Anim.SetBool("IsExploding", true);
-
-            }
-       */
+            GetComponent<PlayerMovement>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("Fireblast").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("Shield").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("Explosion").GetComponent<SpriteRenderer>().enabled = true;
+            Explosion_Anim.SetBool("IsExploding", true);
+            GameOver.SetActive(true);
+        } 
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // Black hole Game Over
+        // Black hole Reducing and losing control
         if (col.gameObject.tag == "Gravity_attraction")
         {
             speed = 0.2f;
-            Debug.Log("Gravity_attraction");
             Anim.SetBool("IsReducing", true);
             GetComponent<PlayerMovement>().enabled = false;
         }
 
         if (col.gameObject.tag == "Gravity_attraction2")
         {
-            speed = speed + 1;
+            speed = speed + 0.5f;
         }
 
-        // Blackhole destroy object
+        // Blackhole destroy and GAME OVER
         if (col.gameObject.tag == "BlackHole")
         {
-            Destroy(gameObject);
+            GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("Fireblast").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("Shield").GetComponent<SpriteRenderer>().enabled = false;
+            GameOver.SetActive(true);
         }
 
         // Collision with Planet
         if (col.gameObject.tag == "Planet")
         {
-           
+            GetComponent<PlayerShield>().TakeDamage(50f);
         }
 
         // Collision with Meteor
         if (col.gameObject.tag == "Meteor")
         {
-
+            GetComponent<PlayerShield>().TakeDamage(25f);
         }
-
     }
-
 }
