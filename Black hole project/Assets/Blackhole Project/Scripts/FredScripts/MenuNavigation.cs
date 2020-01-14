@@ -7,7 +7,16 @@ public class MenuNavigation : MonoBehaviour
 {
     public GameObject creditPanel;
     public GameObject mainPanel;
-    
+
+    void Update()
+    {
+        if (Input.GetButton("Submit"))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        }
+    }
+
+
     public void GotoMainGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);

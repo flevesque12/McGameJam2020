@@ -5,7 +5,7 @@ using UnityEngine;
 public class Camera_Start : MonoBehaviour
 {
     #region VARIABLES
-    public float speed = 2f;
+    public float speed = 0.01f;
     private Transform target;
     public GameObject Player;
     public GameObject Intro_camera;
@@ -21,7 +21,7 @@ public class Camera_Start : MonoBehaviour
     // Objects Move toward Blackhole
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);  
+        StartCoroutine(CheckTheMothership());
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -29,13 +29,29 @@ public class Camera_Start : MonoBehaviour
         // Player and Earth appear, First Cam Disapear
         if (col.gameObject.tag == "Intro_Camera_target")
         {
-            Debug.Log("CamInPLace");
-            Player.SetActive(true);
-            Earth.SetActive(true);
-            Intro_camera.SetActive(false);     
+            StartCoroutine(CheckTheEarth());
         }
 
     }
+
+    // for the player to see the mothership then travalling camera
+    IEnumerator CheckTheMothership()
+    {
+        yield return new WaitForSeconds(0.5f);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+    }
+
+    // for the player to see the Earth then Start
+    IEnumerator CheckTheEarth()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("CamInPLace");
+        Player.SetActive(true);
+        Earth.SetActive(true);
+        Intro_camera.SetActive(false);
+    }
+
+
 
 }
 
