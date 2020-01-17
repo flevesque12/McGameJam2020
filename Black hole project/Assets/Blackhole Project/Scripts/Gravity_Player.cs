@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gravity_Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Gravity_Player : MonoBehaviour
     Animator Anim;
     Animator Explosion_Anim;
     public GameObject GameOver;
+    public GameObject Victory;
     #endregion
 
     void Start()
@@ -34,7 +36,9 @@ public class Gravity_Player : MonoBehaviour
             GameObject.FindGameObjectWithTag("Explosion").GetComponent<SpriteRenderer>().enabled = true;
             Explosion_Anim.SetBool("IsExploding", true);
             GameOver.SetActive(true);
-        } 
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().enabled = true;
+            StartCoroutine(GameOver_Explosion());
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -59,18 +63,41 @@ public class Gravity_Player : MonoBehaviour
             GameObject.FindGameObjectWithTag("Fireblast").GetComponent<SpriteRenderer>().enabled = false;
             GameObject.FindGameObjectWithTag("Shield").GetComponent<SpriteRenderer>().enabled = false;
             GameOver.SetActive(true);
+            StartCoroutine(ReturnToMenu());
+            // Coroutine2
+
         }
 
         // Collision with Planet
         if (col.gameObject.tag == "Planet")
         {
-            GetComponent<PlayerShield>().TakeDamage(50f);
+            GetComponent<PlayerShield>().TakeDamage(25f);
         }
 
         // Collision with Meteor
         if (col.gameObject.tag == "Meteor")
         {
-            GetComponent<PlayerShield>().TakeDamage(25f);
+            GetComponent<PlayerShield>().TakeDamage(15f);
         }
+
+        // Victory! - Collision with Mothership
+        if (col.gameObject.tag == "Mothership")
+        {
+            GameObject.FindGameObjectWithTag("Mothership").GetComponent<AudioSource>().enabled = true;
+            Victory.SetActive(true);
+            StartCoroutine(ReturnToMenu());
+        }
+    }
+
+    IEnumerator GameOver_Explosion()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("MainMenuScene");
+    }
+
+    IEnumerator ReturnToMenu()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
