@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 _distance = transform.position - collision.transform.position;
             transform.position = new Vector2(transform.position.x + _distance.x, transform.position.y + _distance.y);
+            //useless change
         }
 
         //Debug.Log("Colliding");
