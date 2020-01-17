@@ -33,4 +33,9 @@ public class MenuNavigation : MonoBehaviour
         creditPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }

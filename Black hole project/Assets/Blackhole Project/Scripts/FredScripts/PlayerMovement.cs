@@ -54,5 +54,33 @@ public class PlayerMovement : MonoBehaviour
                 transform.position = _pos;
     }
 
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //ContactPoint2D[] contact = collision.contacts;
+
+        /*
+        foreach(ContactPoint2D c in collision.contacts)
+        {
+            //Vector2 _pos = new Vector2(transform.position.x, transform.position.y);
+            //Vector2 _direction = (_pos - c.point).normalized;
+            //transform.Translate(-_direction);
+            print(c.collider.name + " hit " + c.otherCollider.name);
+            Debug.DrawRay(c.point, c.normal, Color.red);
+        }*/
+
+        if(collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Planet")
+        {
+            Vector2 _distance = transform.position - collision.transform.position;
+            transform.position = new Vector2(transform.position.x + _distance.x, transform.position.y + _distance.y);
+        }
+
+        //Debug.Log("Colliding");
+    }
+
+    public IEnumerator Knockback()
+    {
+        yield return 0;
+    }
+
 }
