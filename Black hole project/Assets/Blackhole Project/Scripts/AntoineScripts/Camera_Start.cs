@@ -11,6 +11,7 @@ public class Camera_Start : MonoBehaviour
     public GameObject Intro_camera;
     public GameObject Earth;
     public GameObject Player_Camera;
+    public GameObject Instruction;
 
     #endregion
 
@@ -39,6 +40,7 @@ public class Camera_Start : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        Instruction.SetActive(false);
     }
 
     // for the player to see the Earth then Start

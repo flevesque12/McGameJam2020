@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Planet")
         {
-            Vector2 _distance = transform.position - collision.transform.position;
+           Vector2 _distance = transform.position - collision.transform.position;
             transform.position = new Vector2(transform.position.x + _distance.x, transform.position.y + _distance.y);
             //useless change
         }
