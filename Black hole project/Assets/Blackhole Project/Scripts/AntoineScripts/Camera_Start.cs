@@ -10,6 +10,8 @@ public class Camera_Start : MonoBehaviour
     public GameObject Player;
     public GameObject Intro_camera;
     public GameObject Earth;
+    public GameObject Player_Camera;
+    public GameObject Instruction;
 
     #endregion
 
@@ -31,14 +33,14 @@ public class Camera_Start : MonoBehaviour
         {
             StartCoroutine(CheckTheEarth());
         }
-
     }
 
-    // for the player to see the mothership then travalling camera
+    // for the player to see the mothership then travelling camera
     IEnumerator CheckTheMothership()
     {
         yield return new WaitForSeconds(0.5f);
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        Instruction.SetActive(false);
     }
 
     // for the player to see the Earth then Start
@@ -47,6 +49,7 @@ public class Camera_Start : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Debug.Log("CamInPLace");
         Player.SetActive(true);
+        Player_Camera.SetActive(true);
         Earth.SetActive(true);
         Intro_camera.SetActive(false);
     }
